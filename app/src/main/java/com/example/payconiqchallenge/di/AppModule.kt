@@ -1,0 +1,51 @@
+package com.example.payconiqchallenge.di
+
+import com.example.payconiqchallenge.data.repository.UserRepository
+import com.example.payconiqchallenge.data.repository.UserRepositoryImpl
+import com.example.payconiqchallenge.domain.interactor.UserInteractor
+import com.example.payconiqchallenge.presentation.search.UserSearchViewModel
+import com.example.payconiqchallenge.data.apiservice.ApiService
+import okhttp3.OkHttpClient
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
+/**
+ * Defines app module which will inject the component which is required by the application
+ */
+val appModule = module {
+
+    // Define a single instance of Retrofit using the provided BASE_URL, OkHttpClient, and
+    single<Retrofit> {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(get())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    // Define a single instance of OkHttpClient with default settings
+    single {
+        //Can be updated later to set the timeout for the request like connectionTimeout and pass TimeUnit
+        OkHttpClient.Builder()
+            .build()
+    }
+
+    // Define a single instance of ApiService using Retrofit to create the API service
+    single<ApiService> {
+        get<Retrofit>().create(ApiService::class.java)
+    }
+
+    // Define a single instance of RecipeRepository using the provided ApiService
+    single<UserRepository> { UserRepositoryImpl(get()) }
+
+    // Define a single instance of RecipeRepository using the provided ApiService
+    single{ UserInteractor(get()) }
+
+    // Define the RecipeViewModel using the provided RecipeRepository
+    viewModel { UserSearchViewModel(get()) }
+}
+
+// Base URL for the API service
+private const val BASE_URL = "https://api.github.com/"
