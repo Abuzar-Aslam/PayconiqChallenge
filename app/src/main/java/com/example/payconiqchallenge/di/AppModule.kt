@@ -1,7 +1,7 @@
 package com.example.payconiqchallenge.di
 
-import com.example.payconiqchallenge.data.repository.UserRepository
-import com.example.payconiqchallenge.data.repository.UserRepositoryImpl
+import com.example.payconiqchallenge.data.repository.UserSearchRepository
+import com.example.payconiqchallenge.data.repository.UserSearchRepositoryImpl
 import com.example.payconiqchallenge.domain.interactor.UserInteractor
 import com.example.payconiqchallenge.presentation.search.UserSearchViewModel
 import com.example.payconiqchallenge.data.apiservice.ApiService
@@ -38,7 +38,7 @@ val appModule = module {
     }
 
     // Define a single instance of RecipeRepository using the provided ApiService
-    single<UserRepository> { UserRepositoryImpl(get()) }
+    single<UserSearchRepository> { UserSearchRepositoryImpl(get()) }
 
     // Define a single instance of RecipeRepository using the provided ApiService
     single{ UserInteractor(get()) }
