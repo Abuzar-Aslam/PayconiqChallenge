@@ -5,6 +5,12 @@ import com.example.payconiqchallenge.data.repository.UserSearchRepositoryImpl
 import com.example.payconiqchallenge.domain.interactor.UserInteractor
 import com.example.payconiqchallenge.presentation.search.UserSearchViewModel
 import com.example.payconiqchallenge.data.apiservice.ApiService
+import com.example.payconiqchallenge.data.repository.UserDetailRepository
+import com.example.payconiqchallenge.data.repository.UserDetailRepositoryImpl
+import com.example.payconiqchallenge.data.repository.UserRepoRepository
+import com.example.payconiqchallenge.data.repository.UserRepoRepositoryImpl
+import com.example.payconiqchallenge.domain.interactor.UserDetailInteractor
+import com.example.payconiqchallenge.presentation.detail.UserDetailViewModel
 import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -39,12 +45,19 @@ val appModule = module {
 
     // Define a single instance of RecipeRepository using the provided ApiService
     single<UserSearchRepository> { UserSearchRepositoryImpl(get()) }
+    single<UserDetailRepository> { UserDetailRepositoryImpl(get()) }
+    single<UserRepoRepository> { UserRepoRepositoryImpl(get()) }
 
     // Define a single instance of RecipeRepository using the provided ApiService
-    single{ UserInteractor(get()) }
+    single { UserInteractor(get()) }
+    single { UserDetailInteractor(get(),get()) }
+
+
 
     // Define the RecipeViewModel using the provided RecipeRepository
     viewModel { UserSearchViewModel(get()) }
+    viewModel { UserDetailViewModel(get()) }
+
 }
 
 // Base URL for the API service

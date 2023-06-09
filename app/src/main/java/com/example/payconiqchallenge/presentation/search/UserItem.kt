@@ -23,14 +23,15 @@ import coil.compose.AsyncImage
 import com.example.payconiqchallenge.domain.model.UserModel
 
 @Composable
-fun UserItem(user: UserModel) {
+fun UserItem(user: UserModel, onClick: () -> Unit) {
 
-    Card(modifier = Modifier.padding(8.dp)) {
+    Card(modifier = Modifier
+        .padding(8.dp)
+        .clickable { onClick() }) {
 
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable {  }
                 .padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

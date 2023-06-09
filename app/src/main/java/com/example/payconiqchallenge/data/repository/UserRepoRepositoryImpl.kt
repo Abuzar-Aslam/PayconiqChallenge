@@ -7,24 +7,26 @@ import java.lang.Exception
 
 class UserRepoRepositoryImpl(private val apiService: ApiService) : UserRepoRepository {
 
-    override suspend fun getUserRepository(username: String): Result<UserRepositoryResult> {
+    override suspend fun getUserRepository(username: String): Result<List<UserRepositoryResult>> {
 
-        try {
+        return try {
             val userRepositoryResponse = apiService.getUserRepository(username)
-            return Result.Success(mapUserRepoDataToDomain(userRepositoryResponse))
+            Result.Success(mapUserRepoDataToDomain(userRepositoryResponse))
         } catch (e: Exception) {
-            return Result.Error("Failed to Fetch user Repository: ${e.message}")
+            Result.Error("Failed to Fetch user Repository: ${e.message}")
         }
     }
 
-    private fun mapUserRepoDataToDomain(userRepositoryResponse: UserRepositoryResponse): UserRepositoryResult {
+    private fun mapUserRepoDataToDomain(userRepositoryResponse: List<UserRepositoryResponse>): List<UserRepositoryResult> {
 
-        return UserRepositoryResult(
-            name = userRepositoryResponse.name,
-            id = userRepositoryResponse.id,
-            full_name = userRepositoryResponse.full_name,
-            html_url = userRepositoryResponse.html_url,
-            description = userRepositoryResponse.description
-        )
+        return userRepositoryResponse.map { response ->
+            UserRepositoryResult(
+                name = response.name,
+                id = response.id,
+                starCount = response.starCount,
+                watchCount = response.watchCount,
+                description = response.description
+            )
+        }
     }
 }

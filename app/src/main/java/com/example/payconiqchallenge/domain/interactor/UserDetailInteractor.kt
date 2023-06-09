@@ -15,7 +15,7 @@ class UserDetailInteractor(
         return userDetailRepository.getUserDetail(userName)
     }
 
-    suspend fun userRepository(userName: String): Result<UserRepositoryResult> {
+    suspend fun userRepository(userName: String): Result<List<UserRepositoryResult>> {
         return userRepoRepository.getUserRepository(userName)
     }
 }

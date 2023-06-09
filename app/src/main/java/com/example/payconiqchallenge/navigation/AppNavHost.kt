@@ -6,7 +6,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import com.example.payconiqchallenge.presentation.detail.UserDetailUI
+import com.example.payconiqchallenge.presentation.detail.UserDetailViewModel
 import com.example.payconiqchallenge.presentation.search.UserSearchUI
 import com.example.payconiqchallenge.presentation.search.UserSearchViewModel
 import org.koin.java.KoinJavaComponent.getKoin
@@ -25,7 +29,8 @@ enum class NavPath(
 fun AppNavHost(navHostController: NavHostController, scaffoldState: ScaffoldState) {
 
     val koinContext = getKoin()
-    val viewModel: UserSearchViewModel = koinContext.get()
+    val searchViewModel: UserSearchViewModel = koinContext.get()
+    val detailViewModel: UserDetailViewModel = koinContext.get()
 
     NavHost(navController = navHostController, startDestination = NavPath.UserSearch.route) {
 
@@ -33,13 +38,21 @@ fun AppNavHost(navHostController: NavHostController, scaffoldState: ScaffoldStat
         composable(NavPath.UserSearch.route) {
             UserSearchUI(
                 navHostController = navHostController,
-                userSearchViewModel = viewModel
+                userSearchViewModel = searchViewModel
             )
         }
 
 
-        composable(NavPath.UserDetail.route){
-
+        composable(
+            "${NavPath.UserDetail.route}?name={name}", arguments = listOf(
+                navArgument("name") {
+                    type = NavType.StringType
+                })
+        ) {
+            UserDetailUI(
+                navHostController = navHostController,
+                userDetailViewModel = detailViewModel
+            )
         }
     }
 
