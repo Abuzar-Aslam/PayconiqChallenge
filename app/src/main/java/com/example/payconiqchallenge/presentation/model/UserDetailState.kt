@@ -1,9 +1,15 @@
 package com.example.payconiqchallenge.presentation.model
 
-import com.example.payconiqchallenge.domain.model.UserDetailModel
+import com.example.payconiqchallenge.domain.model.UserDetailResult
 
 data class UserDetailState(
-    val loading: Boolean,
-    val userDetail: UserDetailModel?,
-    val error: String?
-)
+    val isLoading: Boolean = false,
+    val userDetail: UserDetailResult? = null,
+    val error: String = ""
+){
+
+    companion object {
+        val Empty = UserDetailState()
+    }
+
+}
