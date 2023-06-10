@@ -14,7 +14,7 @@ class UserSearchRepositoryImpl(private val apiService: ApiService) : UserSearchR
             val userSearchResult = mapUserDataToDomain(userResponseData)
             Result.Success(userSearchResult)
         } catch (e: Exception) {
-            Result.Error("Failed to fetch users: ${e.message}")
+           Result.Error("Failed to fetch users: ${e.message}")
         }
     }
 

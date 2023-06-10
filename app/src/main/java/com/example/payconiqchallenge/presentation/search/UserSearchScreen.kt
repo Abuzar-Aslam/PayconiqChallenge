@@ -13,6 +13,7 @@ import androidx.navigation.NavHostController
 import com.example.payconiqchallenge.domain.model.UserModel
 import com.example.payconiqchallenge.navigation.NavPath
 import com.example.payconiqchallenge.presentation.model.UserSearchState
+import com.example.payconiqchallenge.utils.LoadingIndicator
 import com.example.payconiqchallenge.utils.rememberFlowWithLifecycle
 
 @ExperimentalComposeUiApi
@@ -29,7 +30,7 @@ fun UserSearchUI(userSearchViewModel: UserSearchViewModel, navHostController: Na
         onClearClick = { userSearchViewModel.onClearClick() },
         matchesFound = userSearchModelState.searchResults.isNotEmpty()
     ) {
-
+        LoadingIndicator(isLoading = userSearchModelState.isLoading)
         UserList(users = userSearchModelState.searchResults) { user ->
             navHostController.navigate(route = "${NavPath.UserDetail.route}?name=${user.login}")
         }
@@ -38,7 +39,7 @@ fun UserSearchUI(userSearchViewModel: UserSearchViewModel, navHostController: Na
 
 
 @Composable
-fun UserList(users: List<UserModel>?, onClick : (UserModel) -> Unit) {
+fun UserList(users: List<UserModel>?, onClick: (UserModel) -> Unit) {
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
@@ -47,7 +48,7 @@ fun UserList(users: List<UserModel>?, onClick : (UserModel) -> Unit) {
     ) {
         if (!users.isNullOrEmpty())
             items(users.size) { user ->
-                UserItem(users[user]){
+                UserItem(users[user]) {
                     onClick(users[user])
                 }
             }

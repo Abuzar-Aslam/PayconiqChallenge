@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.payconiqchallenge.navigation.AppNavHost
 import com.example.payconiqchallenge.presentation.search.UserSearchUI
 import com.example.payconiqchallenge.presentation.search.UserSearchViewModel
+import com.example.payconiqchallenge.ui.theme.ComposeSearchViewSampleTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
@@ -21,13 +22,18 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
+
+
         setContent {
             val scaffoldState = rememberScaffoldState()
             val navController = rememberNavController()
 
-            // A surface container using the 'background' color from the theme
-            Surface(color = MaterialTheme.colors.background) {
-                AppNavHost(navController, scaffoldState)
+            ComposeSearchViewSampleTheme {
+                // A surface container using the 'background' color from the theme
+                Surface(color = MaterialTheme.colors.background) {
+                    AppNavHost(navController, scaffoldState)
+                }
             }
         }
     }
