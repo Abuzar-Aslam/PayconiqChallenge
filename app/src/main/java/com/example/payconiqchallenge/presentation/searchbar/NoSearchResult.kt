@@ -17,7 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.payconiqchallenge.R
 
-
 @Composable
 fun NoSearchResults(searchText: String) {
 
@@ -25,7 +24,6 @@ fun NoSearchResults(searchText: String) {
         modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         Icon(
             imageVector = Icons.Filled.Search,
             contentDescription = stringResource(R.string.no_search_icon_description),

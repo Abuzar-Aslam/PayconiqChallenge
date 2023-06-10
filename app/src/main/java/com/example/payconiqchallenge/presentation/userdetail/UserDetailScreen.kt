@@ -45,15 +45,17 @@ fun UserDetailUI(userDetailViewModel: UserDetailViewModel, navHostController: Na
     val userRepositoryState by rememberFlowWithLifecycle(userDetailViewModel.userRepositoryState)
         .collectAsState(initial = UserRepositoryState.Empty)
 
+    val userDetailTitle = stringResource(id = R.string.user_detail_title)
+
     Scaffold(topBar = {
         TopAppBar(title = {
-            Text(text = "User Detail")
+            Text(text = userDetailTitle)
         }, navigationIcon = {
             IconButton(onClick = { navHostController.popBackStack() }) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
                     modifier = Modifier,
-                    contentDescription = stringResource(id = R.string.userDetail_back)
+                    contentDescription = stringResource(id = R.string.user_detail_back)
                 )
 
             }
@@ -82,6 +84,7 @@ fun UserDetailUI(userDetailViewModel: UserDetailViewModel, navHostController: Na
 
 @Composable
 fun UserRepositoryList(userRepositoryResult: List<UserRepositoryResult>) {
+    val noRepositoryErrorMessage = stringResource(R.string.user_detail_no_repository_found)
     if (userRepositoryResult.isNotEmpty()) {
         LazyColumn {
             items(userRepositoryResult.size) { repository ->
@@ -91,7 +94,7 @@ fun UserRepositoryList(userRepositoryResult: List<UserRepositoryResult>) {
     } else {
         // Handle the case when repositories list is empty (e.g., data is still loading or API call failed)
         Text(
-            text = "No repositories found",
+            text = noRepositoryErrorMessage,
             style = MaterialTheme.typography.body1,
             modifier = Modifier.padding(8.dp)
         )
@@ -101,6 +104,11 @@ fun UserRepositoryList(userRepositoryResult: List<UserRepositoryResult>) {
 
 @Composable
 fun UserDetailContent(userDetailResult: UserDetailResult?) {
+    val followersText = stringResource(R.string.user_detail_followers)
+    val followingText = stringResource(R.string.user_detail_following)
+    val dataUnavailable = stringResource(R.string.user_detail_data_unavailable)
+    val userIcon = stringResource(id = R.string.user_detail_user_icon_description)
+
     if (userDetailResult != null) {
         Column(
             modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -108,7 +116,7 @@ fun UserDetailContent(userDetailResult: UserDetailResult?) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 AsyncImage(
                     model = userDetailResult.avatarUrl,
-                    contentDescription = "User Icon",
+                    contentDescription = userIcon,
                     modifier = Modifier.size(24.dp)
                 )
                 Text(
@@ -118,18 +126,18 @@ fun UserDetailContent(userDetailResult: UserDetailResult?) {
                 )
             }
             Text(
-                text = "Followers: ${userDetailResult.followers}",
+                text = followersText + userDetailResult.followers,
                 style = MaterialTheme.typography.body1
             )
             Text(
-                text = "Following: ${userDetailResult.following}",
+                text = followingText + userDetailResult.following,
                 style = MaterialTheme.typography.body1
             )
         }
     } else {
         // Handle the case when userDetail is null (e.g., data is still loading or API call failed)
         Text(
-            text = "User detail data is unavailable",
+            text = dataUnavailable,
             style = MaterialTheme.typography.body1,
             modifier = Modifier.padding(16.dp)
         )

@@ -1,7 +1,11 @@
 package com.example.payconiqchallenge.presentation.userdetail
 
+import android.app.Application
+import android.content.Context
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.payconiqchallenge.R
 import com.example.payconiqchallenge.data.repository.Result
 import com.example.payconiqchallenge.domain.interactor.UserDetailInteractor
 import com.example.payconiqchallenge.presentation.model.UserDetailState

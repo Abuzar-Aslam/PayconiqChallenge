@@ -38,7 +38,6 @@ fun UserSearchUI(userSearchViewModel: UserSearchViewModel, navHostController: Na
     }
 }
 
-
 @Composable
 fun UserList(users: List<UserModel>?, onClick: (UserModel) -> Unit) {
 
