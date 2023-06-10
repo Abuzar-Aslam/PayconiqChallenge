@@ -17,10 +17,13 @@ import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -39,8 +42,8 @@ import com.example.payconiqchallenge.domain.model.UserRepositoryResult
 import com.example.payconiqchallenge.presentation.model.UserDetailState
 import com.example.payconiqchallenge.presentation.model.UserRepositoryState
 import com.example.payconiqchallenge.utils.rememberFlowWithLifecycle
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import com.example.payconiqchallenge.R
 
 
@@ -57,6 +60,15 @@ fun UserDetailUI(userDetailViewModel: UserDetailViewModel, navHostController: Na
     Scaffold(topBar = {
         TopAppBar(title = {
             Text(text = "User Detail")
+        }, navigationIcon = {
+            IconButton(onClick = { navHostController.popBackStack() }) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    modifier = Modifier,
+                    contentDescription = stringResource(id = R.string.userDetail_back)
+                )
+
+            }
         })
     }) {
 

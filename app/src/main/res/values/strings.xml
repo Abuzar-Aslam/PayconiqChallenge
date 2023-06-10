@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Payconiq Challenge</string>
+    <string name="userDetail_back">Back</string>
 </resources>
