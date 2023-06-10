@@ -3,14 +3,14 @@ package com.example.payconiqchallenge.di
 import com.example.payconiqchallenge.data.repository.UserSearchRepository
 import com.example.payconiqchallenge.data.repository.UserSearchRepositoryImpl
 import com.example.payconiqchallenge.domain.interactor.UserInteractor
-import com.example.payconiqchallenge.presentation.search.UserSearchViewModel
+import com.example.payconiqchallenge.presentation.usersearch.UserSearchViewModel
 import com.example.payconiqchallenge.data.apiservice.ApiService
 import com.example.payconiqchallenge.data.repository.UserDetailRepository
 import com.example.payconiqchallenge.data.repository.UserDetailRepositoryImpl
 import com.example.payconiqchallenge.data.repository.UserRepoRepository
 import com.example.payconiqchallenge.data.repository.UserRepoRepositoryImpl
 import com.example.payconiqchallenge.domain.interactor.UserDetailInteractor
-import com.example.payconiqchallenge.presentation.detail.UserDetailViewModel
+import com.example.payconiqchallenge.presentation.userdetail.UserDetailViewModel
 import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module

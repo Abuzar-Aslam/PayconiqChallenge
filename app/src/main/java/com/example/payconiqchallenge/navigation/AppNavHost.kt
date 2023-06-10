@@ -9,10 +9,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.payconiqchallenge.presentation.detail.UserDetailUI
-import com.example.payconiqchallenge.presentation.detail.UserDetailViewModel
-import com.example.payconiqchallenge.presentation.search.UserSearchUI
-import com.example.payconiqchallenge.presentation.search.UserSearchViewModel
+import com.example.payconiqchallenge.presentation.userdetail.UserDetailUI
+import com.example.payconiqchallenge.presentation.userdetail.UserDetailViewModel
+import com.example.payconiqchallenge.presentation.usersearch.UserSearchUI
+import com.example.payconiqchallenge.presentation.usersearch.UserSearchViewModel
 import org.koin.java.KoinJavaComponent.getKoin
 
 enum class NavPath(

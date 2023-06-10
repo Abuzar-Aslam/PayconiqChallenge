@@ -1,4 +1,4 @@
-package com.example.payconiqchallenge.presentation.search
+package com.example.payconiqchallenge.presentation.usersearch
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

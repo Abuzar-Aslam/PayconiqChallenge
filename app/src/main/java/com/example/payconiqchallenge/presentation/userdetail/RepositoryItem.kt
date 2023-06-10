@@ -1,4 +1,4 @@
-package com.example.payconiqchallenge.presentation.detail
+package com.example.payconiqchallenge.presentation.userdetail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -37,7 +37,8 @@ fun RepositoryItem(userRepository: UserRepositoryResult) {
                 .padding(8.dp)
         ) {
             Text(
-                text = userRepository.name, style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                text = userRepository.name,
+                style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold)
             )
             if (!userRepository.description.isNullOrEmpty())
                 Text(
@@ -51,7 +52,7 @@ fun RepositoryItem(userRepository: UserRepositoryResult) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    painterResource(R.drawable.icon_star_rate),
+                    painter = painterResource(R.drawable.icon_star_rate),
                     contentDescription = "Star Icon",
                     tint = Color.Gray,
                     modifier = Modifier.size(18.dp)
@@ -63,7 +64,7 @@ fun RepositoryItem(userRepository: UserRepositoryResult) {
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Icon(
-                    painterResource(R.drawable.icon_visibility),
+                    painter = painterResource(R.drawable.icon_visibility),
                     contentDescription = "Watcher Icon",
                     tint = Color.Gray,
                     modifier = Modifier.size(18.dp)

@@ -1,4 +1,4 @@
-package com.example.payconiqchallenge.presentation.search
+package com.example.payconiqchallenge.presentation.usersearch
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Arrangement
@@ -13,6 +13,7 @@ import androidx.navigation.NavHostController
 import com.example.payconiqchallenge.domain.model.UserModel
 import com.example.payconiqchallenge.navigation.NavPath
 import com.example.payconiqchallenge.presentation.model.UserSearchState
+import com.example.payconiqchallenge.presentation.searchbar.SearchBarUI
 import com.example.payconiqchallenge.utils.LoadingIndicator
 import com.example.payconiqchallenge.utils.rememberFlowWithLifecycle
 

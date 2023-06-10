@@ -1,4 +1,4 @@
-package com.example.payconiqchallenge.presentation.detail
+package com.example.payconiqchallenge.presentation.userdetail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

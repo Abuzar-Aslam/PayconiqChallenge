@@ -1,16 +1,11 @@
-package com.example.payconiqchallenge.presentation.detail
+package com.example.payconiqchallenge.presentation.userdetail
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.payconiqchallenge.data.repository.Result
-import com.example.payconiqchallenge.data.repository.UserRepoRepository
 import com.example.payconiqchallenge.domain.interactor.UserDetailInteractor
-import com.example.payconiqchallenge.domain.interactor.UserInteractor
 import com.example.payconiqchallenge.presentation.model.UserDetailState
 import com.example.payconiqchallenge.presentation.model.UserRepositoryState
-import com.example.payconiqchallenge.presentation.model.UserSearchState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

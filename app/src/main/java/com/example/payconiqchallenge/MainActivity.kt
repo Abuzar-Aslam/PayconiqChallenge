@@ -10,10 +10,7 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.compose.rememberNavController
 import com.example.payconiqchallenge.navigation.AppNavHost
-import com.example.payconiqchallenge.presentation.search.UserSearchUI
-import com.example.payconiqchallenge.presentation.search.UserSearchViewModel
 import com.example.payconiqchallenge.ui.theme.ComposeSearchViewSampleTheme
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
 

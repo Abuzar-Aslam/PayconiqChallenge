@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Payconiq Challenge</string>
     <string name="userDetail_back">Back</string>
+    <string name="no_search_icon_description">No search icon</string>
+    <string name="no_search_message">Please start search to see result here</string>
+    <string name="no_search_result_message">No search resul found</string>
 </resources>
