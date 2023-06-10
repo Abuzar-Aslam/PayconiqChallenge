@@ -2,6 +2,7 @@ package com.example.payconiqchallenge.base
 
 import android.app.Application
 import com.example.payconiqchallenge.di.appModule
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
 /**
@@ -14,7 +15,7 @@ class App : Application() {
 
         // Initialize Koin
         startKoin {
-            applicationContext
+            androidContext(this@App)
             modules(appModule)
         }
     }

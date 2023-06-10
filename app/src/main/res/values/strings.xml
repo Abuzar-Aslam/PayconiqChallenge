@@ -4,7 +4,7 @@
     <string name="no_search_message">Please start search to see result here</string>
     <string name="no_search_result_message">No search resul found</string>
     <string name="search_error">An error occurred while searching users: %1$s</string>
-
+    <string name="user_search_error_message">An error occurred while searching users:  %1$s</string>
 
     <!-- User Detail -->
     <string name="user_detail_title">User Detail</string>
@@ -15,4 +15,7 @@
     <string name="user_detail_data_unavailable">User detail data is unavailable</string>
     <string name="user_detail_user_icon_description">User Icon</string>
     <string name="user_detail_no_repository_found">No repositories found</string>
+
+    <string name="user_detail_error_message">An error occurred while fetching user detail: %1$s</string>
+    <string name="user_detail_repository_error_message">An error occurred while fetching user repositories: %1$s</string>
 </resources>

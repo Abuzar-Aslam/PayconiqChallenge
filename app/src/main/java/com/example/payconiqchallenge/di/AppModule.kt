@@ -11,6 +11,8 @@ import com.example.payconiqchallenge.data.repository.UserRepoRepository
 import com.example.payconiqchallenge.data.repository.UserRepoRepositoryImpl
 import com.example.payconiqchallenge.domain.interactor.UserDetailInteractor
 import com.example.payconiqchallenge.presentation.userdetail.UserDetailViewModel
+import com.example.payconiqchallenge.provider.AndroidStringResourceProvider
+import com.example.payconiqchallenge.provider.StringResourceProvider
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -51,13 +53,14 @@ val appModule = module {
 
     // Define a single instance of RecipeRepository using the provided ApiService
     single { UserInteractor(get()) }
-    single { UserDetailInteractor(get(),get()) }
+    single { UserDetailInteractor(get(), get()) }
 
+    single<StringResourceProvider> { AndroidStringResourceProvider(androidContext()) }
 
 
     // Define the RecipeViewModel using the provided RecipeRepository
-    viewModel { UserSearchViewModel(get()) }
-    viewModel { UserDetailViewModel(get()) }
+    viewModel { UserSearchViewModel(get(),get()) }
+    viewModel { UserDetailViewModel(get(), get()) }
 
 }
 

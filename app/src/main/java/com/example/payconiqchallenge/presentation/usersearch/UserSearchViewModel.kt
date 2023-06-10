@@ -2,16 +2,21 @@ package com.example.payconiqchallenge.presentation.usersearch
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.payconiqchallenge.R
 import com.example.payconiqchallenge.data.repository.Result
 import com.example.payconiqchallenge.domain.interactor.UserInteractor
 import com.example.payconiqchallenge.presentation.model.UserSearchState
+import com.example.payconiqchallenge.provider.StringResourceProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class UserSearchViewModel(private val userInteractor: UserInteractor) : ViewModel() {
+class UserSearchViewModel(
+    private val userInteractor: UserInteractor,
+    private val stringResourceProvider: StringResourceProvider
+) : ViewModel() {
 
     private val _userSearchState: MutableStateFlow<UserSearchState> =
         MutableStateFlow(UserSearchState())
@@ -25,7 +30,10 @@ class UserSearchViewModel(private val userInteractor: UserInteractor) : ViewMode
                     runCatching {
                         userInteractor.searchUser(query)
                     }.getOrElse {
-                        Result.Error("An error occurred while searching users: ${it.message}")
+                        Result.Error(
+                            stringResourceProvider.getString(R.string.user_search_error_message)
+                                .format(it.message)
+                        )
                     }
                 }
 

@@ -1,8 +1,5 @@
 package com.example.payconiqchallenge.presentation.userdetail
 
-import android.app.Application
-import android.content.Context
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.payconiqchallenge.R
@@ -10,15 +7,16 @@ import com.example.payconiqchallenge.data.repository.Result
 import com.example.payconiqchallenge.domain.interactor.UserDetailInteractor
 import com.example.payconiqchallenge.presentation.model.UserDetailState
 import com.example.payconiqchallenge.presentation.model.UserRepositoryState
+import com.example.payconiqchallenge.provider.StringResourceProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-
 class UserDetailViewModel(
-    private val userDetailInteractor: UserDetailInteractor
+    private val userDetailInteractor: UserDetailInteractor,
+    private val stringResourceProvider: StringResourceProvider
 ) : ViewModel() {
     private val _userDetailState: MutableStateFlow<UserDetailState> =
         MutableStateFlow(UserDetailState())
@@ -39,12 +37,15 @@ class UserDetailViewModel(
 
         viewModelScope.launch {
             try {
-
                 val userDetailResult = withContext(Dispatchers.IO) {
                     runCatching {
                         userDetailInteractor.userDetail(userName)
                     }.getOrElse {
-                        Result.Error("An error occurred while searching users: ${it.message}")
+                        Result.Error(
+                            stringResourceProvider.getString(
+                                R.string.user_detail_error_message
+                            ).format(it.message)
+                        )
                     }
                 }
 
@@ -86,7 +87,10 @@ class UserDetailViewModel(
                     runCatching {
                         userDetailInteractor.userRepository(userName)
                     }.getOrElse {
-                        Result.Error("An error occurred while searching users: ${it.message}")
+                        Result.Error(
+                            stringResourceProvider.getString(R.string.user_detail_repository_error_message)
+                                .format(it.message)
+                        )
                     }
                 }
 
