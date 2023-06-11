@@ -45,6 +45,4 @@ class UserDetailRepositoryImpl(private val apiService: ApiService) : UserDetailR
             followers = userDetailResponse.followers
         )
     }
-
-
 }

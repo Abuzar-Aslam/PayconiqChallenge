@@ -13,7 +13,6 @@ import com.example.payconiqchallenge.domain.interactor.UserDetailInteractor
 import com.example.payconiqchallenge.presentation.userdetail.UserDetailViewModel
 import com.example.payconiqchallenge.provider.AndroidStringResourceProvider
 import com.example.payconiqchallenge.provider.StringResourceProvider
-import com.example.payconiqchallenge.utils.Constants
 import com.example.payconiqchallenge.utils.Constants.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

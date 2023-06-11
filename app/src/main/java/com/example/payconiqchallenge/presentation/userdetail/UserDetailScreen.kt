@@ -34,7 +34,6 @@ import androidx.compose.ui.res.stringResource
 import com.example.payconiqchallenge.R
 import com.example.payconiqchallenge.utils.LoadingIndicator
 
-
 @Composable
 fun UserDetailUI(userDetailViewModel: UserDetailViewModel, navHostController: NavHostController,selectedUserName:String) {
 

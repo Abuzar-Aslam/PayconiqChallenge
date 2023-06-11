@@ -14,5 +14,4 @@ interface UserRepoRepository {
      * @return A [Result] object representing the result of the operation. It contains either a list of [UserRepositoryResult] on success or an error message on failure.
      */
     suspend fun getUserRepository(username: String): Result<List<UserRepositoryResult>>
-
 }
