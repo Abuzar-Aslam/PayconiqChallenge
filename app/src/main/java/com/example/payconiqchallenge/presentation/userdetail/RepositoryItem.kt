@@ -23,7 +23,11 @@ import androidx.compose.ui.unit.sp
 import com.example.payconiqchallenge.R
 import com.example.payconiqchallenge.domain.model.UserRepositoryResult
 
-
+/**
+ * Composable function for displaying a single repository item.
+ *
+ * @param userRepository The data of the user repository to display.
+ */
 @Composable
 fun RepositoryItem(userRepository: UserRepositoryResult) {
 

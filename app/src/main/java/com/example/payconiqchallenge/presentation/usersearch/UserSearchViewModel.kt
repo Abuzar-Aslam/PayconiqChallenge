@@ -13,6 +13,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ *ViewModel class for the User Search feature.
+ *@param userInteractor The UserInteractor instance responsible for user-related operations.
+ *@param stringResourceProvider The StringResourceProvider instance for retrieving string resources.
+ */
 class UserSearchViewModel(
     private val userInteractor: UserInteractor,
     private val stringResourceProvider: StringResourceProvider
@@ -22,6 +27,10 @@ class UserSearchViewModel(
         MutableStateFlow(UserSearchState())
     val userSearchState: StateFlow<UserSearchState> = _userSearchState
 
+    /**
+     *Searches for users based on the given query.
+     *@param query The search query entered by the user.
+     */
     private fun searchUsers(query: String) {
 
         viewModelScope.launch {
@@ -64,6 +73,10 @@ class UserSearchViewModel(
         }
     }
 
+    /**
+     *Callback function invoked when the search text is changed.
+     *@param query The updated search query entered by the user.
+     */
     fun onSearchTextChanged(query: String) {
 
         // Update the state to show loading indicator
@@ -76,6 +89,10 @@ class UserSearchViewModel(
         searchUsers(query)
     }
 
+    /**
+     *Callback function invoked when the clear button is clicked.
+     *Resets the search state to its initial values.
+     */
     fun onClearClick() {
         _userSearchState.value = UserSearchState()
     }

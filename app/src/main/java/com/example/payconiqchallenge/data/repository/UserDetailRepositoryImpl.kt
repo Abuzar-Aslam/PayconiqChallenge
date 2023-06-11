@@ -7,8 +7,19 @@ import com.example.payconiqchallenge.domain.model.UserDetailResult
 import com.example.payconiqchallenge.domain.model.UserRepositoryResult
 import java.lang.Exception
 
+/**
+ * Implementation of [UserDetailRepository] that retrieves user details from the API service.
+ *
+ * @param apiService The API service instance used for making network requests.
+ */
 class UserDetailRepositoryImpl(private val apiService: ApiService) : UserDetailRepository {
 
+    /**
+     * Retrieves the user detail for the specified username.
+     *
+     * @param username The username of the user.
+     * @return A [Result] object representing the result of the operation. It contains either a [UserDetailResult] on success or an error message on failure.
+     */
     override suspend fun getUserDetail(username: String): Result<UserDetailResult> {
 
         try {
@@ -19,8 +30,12 @@ class UserDetailRepositoryImpl(private val apiService: ApiService) : UserDetailR
         }
     }
 
-
-
+    /**
+     * Maps the user detail response from the API to the domain model.
+     *
+     * @param userDetailResponse The user detail response received from the API.
+     * @return The mapped [UserDetailResult] domain model.
+     */
     private fun mapUserDetailDataToDomain(userDetailResponse: UserDetailResponse): UserDetailResult {
 
         return UserDetailResult(

@@ -8,6 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
+/**
+ * Displays a loading indicator when [isLoading] is true.
+ *
+ * @param isLoading Indicates whether the loading indicator should be shown or hidden.
+ */
 @Composable
 fun LoadingIndicator(isLoading: Boolean) {
     if (isLoading) {

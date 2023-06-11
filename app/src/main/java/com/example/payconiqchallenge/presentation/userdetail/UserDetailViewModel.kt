@@ -14,6 +14,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ *
+ *ViewModel class responsible for managing the user detail screen state and data retrieval.
+ *@param userDetailInteractor The interactor class that handles the business logic for fetching user details and repositories.
+ *@param stringResourceProvider The provider class for accessing string resources.
+ */
 class UserDetailViewModel(
     private val userDetailInteractor: UserDetailInteractor,
     private val stringResourceProvider: StringResourceProvider
@@ -27,7 +33,10 @@ class UserDetailViewModel(
         MutableStateFlow(UserRepositoryState())
     val userRepositoryState: StateFlow<UserRepositoryState> = _userRepositoryState
 
-
+    /**
+     *Fetches the user detail for the specified username.
+     *@param userName The username of the user to fetch the detail for.
+     */
     fun fetchUserDetail(userName: String) {
 
         // Update the state to show loading indicator
@@ -72,7 +81,10 @@ class UserDetailViewModel(
         }
     }
 
-
+    /**
+     *Fetches the user repositories for the specified username.
+     *@param userName The username of the user to fetch the repositories for.
+     */
     fun fetchUserRepository(userName: String) {
 
         // Update the state to show loading indicator

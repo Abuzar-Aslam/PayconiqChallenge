@@ -36,7 +36,14 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.example.payconiqchallenge.R
 
-
+/**
+ * Composable function for displaying a search bar with text input and clear button functionality.
+ *
+ * @param searchText The current search text entered by the user.
+ * @param placeholderText The placeholder text to display in the search bar when it is empty.
+ * @param onSearchTextChanged The callback function to invoke when the search text changes.
+ * @param onClearClick The callback function to invoke when the clear button is clicked.
+ */
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
 @Composable

@@ -17,13 +17,21 @@ import com.example.payconiqchallenge.presentation.searchbar.SearchBarUI
 import com.example.payconiqchallenge.utils.LoadingIndicator
 import com.example.payconiqchallenge.utils.rememberFlowWithLifecycle
 
+/**
+ *Composable function for the User Search UI screen.
+ *@param userSearchViewModel The UserSearchViewModel instance responsible for handling user search logic.
+ *@param navHostController The NavHostController used for navigation within the app.
+ */
 @ExperimentalComposeUiApi
 @ExperimentalAnimationApi
 @Composable
 fun UserSearchUI(userSearchViewModel: UserSearchViewModel, navHostController: NavHostController) {
+
+    // Collect the user search state using rememberFlowWithLifecycle and collectAsState
     val userSearchModelState by rememberFlowWithLifecycle(userSearchViewModel.userSearchState)
         .collectAsState(initial = UserSearchState.Empty)
 
+    // Render the search bar and user list
     SearchBarUI(
         searchText = userSearchModelState.searchQuery,
         placeholderText = "Search users",
@@ -31,6 +39,7 @@ fun UserSearchUI(userSearchViewModel: UserSearchViewModel, navHostController: Na
         onClearClick = { userSearchViewModel.onClearClick() },
         matchesFound = userSearchModelState.searchResults.isNotEmpty()
     ) {
+        // Render loading indicator and user list
         LoadingIndicator(isLoading = userSearchModelState.isLoading)
         UserList(users = userSearchModelState.searchResults) { user ->
             navHostController.navigate(route = "${NavPath.UserDetail.route}?name=${user.login}")
@@ -38,6 +47,11 @@ fun UserSearchUI(userSearchViewModel: UserSearchViewModel, navHostController: Na
     }
 }
 
+/**
+ *Composable function for rendering a list of users.
+ *@param users The list of UserModel representing the users to display.
+ *@param onClick Callback function invoked when a user item is clicked.
+ */
 @Composable
 fun UserList(users: List<UserModel>?, onClick: (UserModel) -> Unit) {
 

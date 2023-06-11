@@ -20,6 +20,11 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.payconiqchallenge.domain.model.UserModel
 
+/**
+ *Composable function that represents an item in the user list.
+ *@param user The UserModel representing the user to display.
+ *@param onClick Callback function invoked when the user item is clicked.
+ */
 @Composable
 fun UserItem(user: UserModel, onClick: () -> Unit) {
 

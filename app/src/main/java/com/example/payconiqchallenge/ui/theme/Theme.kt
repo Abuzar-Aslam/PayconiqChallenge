@@ -18,6 +18,12 @@ private val LightColorPalette = lightColors(
     secondary = Teal200
 )
 
+/**
+ * Composable function that sets up the theme for the app.
+ *
+ * @param darkTheme Boolean value indicating whether to use dark theme colors.
+ * @param content Lambda function representing the content of the app.
+ */
 @Composable
 fun ComposeSearchViewSampleTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

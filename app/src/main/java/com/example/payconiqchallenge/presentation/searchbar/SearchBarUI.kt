@@ -9,6 +9,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
+/**
+ * Composable function for displaying a search bar UI.
+ *
+ * @param searchText The current search text entered by the user.
+ * @param placeholderText The placeholder text to display in the search bar when it is empty.
+ * @param onSearchTextChanged The callback function to invoke when the search text changes.
+ * @param onClearClick The callback function to invoke when the clear button is clicked.
+ * @param matchesFound Flag indicating if any search results are found.
+ * @param results The composable function to display search results.
+ */
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
 @Composable

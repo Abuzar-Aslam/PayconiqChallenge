@@ -13,17 +13,26 @@ import retrofit2.http.Query
 interface ApiService {
 
     /**
-     * Fetches a list of recipes from the API.
+     * Fetches a list of users from the API.
      *
-     * @return A list of recipes.
+     * @return A list of users.
      */
     @GET("search/users")
     suspend fun searchUsers(@Query("q") query: String): UserSearchResponse
 
+    /**
+     * Fetches a detail of specific users from the API.
+     *
+     * @return user detail object of specific user.
+     */
     @GET("users/{username}")
     suspend fun getUserDetail(@Path("username") username: String): UserDetailResponse
 
-
+    /**
+     * Fetches a list of repos of specific user from the API.
+     *
+     * @return list of repos of specific user.
+     */
     @GET("users/{username}/repos")
     suspend fun getUserRepository(@Path("username") username: String): List<UserRepositoryResponse>
 

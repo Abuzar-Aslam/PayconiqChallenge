@@ -36,7 +36,7 @@ import com.example.payconiqchallenge.utils.LoadingIndicator
 
 
 @Composable
-fun UserDetailUI(userDetailViewModel: UserDetailViewModel, navHostController: NavHostController) {
+fun UserDetailUI(userDetailViewModel: UserDetailViewModel, navHostController: NavHostController,selectedUserName:String) {
 
 
     val userDetailState by rememberFlowWithLifecycle(userDetailViewModel.userDetailState)
@@ -77,8 +77,8 @@ fun UserDetailUI(userDetailViewModel: UserDetailViewModel, navHostController: Na
 
     // Fetch user detail and repository data
     LaunchedEffect(Unit) {
-        userDetailViewModel.fetchUserDetail("a")
-        userDetailViewModel.fetchUserRepository("b")
+        userDetailViewModel.fetchUserDetail(selectedUserName)
+        userDetailViewModel.fetchUserRepository(selectedUserName)
     }
 }
 

@@ -17,6 +17,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.payconiqchallenge.R
 
+/**
+ * Composable function for displaying a message when there are no search results.
+ *
+ * @param searchText The current search text entered by the user.
+ */
 @Composable
 fun NoSearchResults(searchText: String) {
 
