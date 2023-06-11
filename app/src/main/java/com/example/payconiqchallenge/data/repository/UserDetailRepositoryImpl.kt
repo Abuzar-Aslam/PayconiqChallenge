@@ -18,10 +18,10 @@ class UserDetailRepositoryImpl(private val apiService: ApiService) : UserDetailR
      * @param username The username of the user.
      * @return A [Result] object representing the result of the operation. It contains either a [UserDetailResult] on success or an error message on failure.
      */
-    override suspend fun getUserDetail(username: String, currentPage: Int): Result<UserDetailResult> {
+    override suspend fun getUserDetail(username: String): Result<UserDetailResult> {
 
         try {
-            val userDetail = apiService.getUserDetail(username,currentPage)
+            val userDetail = apiService.getUserDetail(username)
             return Result.Success(mapUserDetailDataToDomain(userDetail))
         } catch (e: Exception) {
             return Result.Error("Failed to Fetch user Repository: ${e.message}")

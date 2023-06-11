@@ -7,6 +7,8 @@ import com.example.payconiqchallenge.data.repository.Result
 import com.example.payconiqchallenge.domain.interactor.UserInteractor
 import com.example.payconiqchallenge.presentation.model.UserSearchState
 import com.example.payconiqchallenge.provider.StringResourceProvider
+import com.example.payconiqchallenge.utils.Constants.DEFAULT_PAGE
+import com.example.payconiqchallenge.utils.Constants.PER_PAGE
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,9 +16,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
- *ViewModel class for the User Search feature.
- *@param userInteractor The UserInteractor instance responsible for user-related operations.
- *@param stringResourceProvider The StringResourceProvider instance for retrieving string resources.
+ * ViewModel class for the User Search feature.
+ * @param userInteractor The UserInteractor instance responsible for user-related operations.
+ * @param stringResourceProvider The StringResourceProvider instance for retrieving string resources.
  */
 class UserSearchViewModel(
     private val userInteractor: UserInteractor,
@@ -27,21 +29,20 @@ class UserSearchViewModel(
         MutableStateFlow(UserSearchState())
     val userSearchState: StateFlow<UserSearchState> = _userSearchState
 
-    private var currentPage: Int = 1
+    private var currentPage: Int = DEFAULT_PAGE
     private var totalCount: Int = 0
 
     /**
-     *Searches for users based on the given query.
-     *@param query The search query entered by the user.
+     * Searches for users based on the given query and page number.
+     * @param query The search query entered by the user.
+     * @param page The page number to retrieve.
      */
     private fun searchUsers(query: String, page: Int) {
-
         viewModelScope.launch {
             try {
                 val result = withContext(Dispatchers.IO) {
                     runCatching {
                         userInteractor.searchUser(query, page)
-
                     }.getOrElse {
                         Result.Error(
                             stringResourceProvider.getString(R.string.user_search_error_message)
@@ -52,7 +53,6 @@ class UserSearchViewModel(
 
                 when (result) {
                     is Result.Success -> {
-
                         val userList = result.data.users
                         totalCount = result.data.totalCount
 
@@ -74,65 +74,85 @@ class UserSearchViewModel(
                             _userSearchState.value = userSearchState.value.copy(
                                 searchResults = updatedSearchResults,
                                 isLoading = false,
-                                error = ""
+                                error = "",
+                                totalPageCount = totalCount
                             )
                         }
                     }
 
                     is Result.Error -> {
                         _userSearchState.value = userSearchState.value.copy(
-                            searchResults = emptyList(),
                             isLoading = false,
                             error = result.message
                         )
                     }
                 }
-
             } catch (e: Exception) {
                 _userSearchState.value = userSearchState.value.copy(
                     searchResults = emptyList(),
                     isLoading = false,
-                    error = e.message!!
+                    error = e.message ?: ""
                 )
             }
         }
     }
 
     /**
-     *Callback function invoked when the search text is changed.
-     *@param query The updated search query entered by the user.
+     * Callback function invoked when the search text is changed.
+     * @param query The updated search query entered by the user.
      */
     fun onSearchTextChanged(query: String) {
-        currentPage = 1
-        _userSearchState.value = UserSearchState(searchQuery = query)
-
+        currentPage = DEFAULT_PAGE
         if (query.isNotEmpty()) {
             // Start searching with the first page
             _userSearchState.value = userSearchState.value.copy(
+                searchQuery = query,
                 isLoading = true,
                 error = ""
             )
             searchUsers(query, currentPage)
+        } else {
+            _userSearchState.value = UserSearchState(searchQuery = query)
         }
     }
 
-    fun onLoadMore(query: String) {
+    /**
+     * Callback function invoked when
+
+    the "Load More" action is triggered. It loads the next page of search results if there are more pages available.
+     */
+    fun onLoadMore() {
         val query = userSearchState.value.searchQuery
-        if (query.isNotEmpty() && userSearchState.value.searchResults.size < totalCount) {
+        if (query.isNotEmpty() && currentPage < getTotalPageCount()) {
             // Increment the page count and load the next page
             currentPage++
             searchUsers(query, currentPage)
         }
     }
 
+
     /**
-     *Callback function invoked when the clear button is clicked.
-     *Resets the search state to its initial values.
+     * Callback function invoked when the clear button is clicked.
+     * Resets the search state to its initial values.
      */
     fun onClearClick() {
         // Clear the search query and results
-        currentPage = 1
+        currentPage = DEFAULT_PAGE
         totalCount = 0
         _userSearchState.value = UserSearchState()
     }
+
+    /**
+     * Calculates the total page count based on the total items and the items per page.
+     * @return The total page count.
+     */
+    private fun getTotalPageCount(): Int {
+        val perPage = PER_PAGE
+        return if (totalCount % perPage == 0) {
+            totalCount / perPage
+        } else {
+            (totalCount / perPage) + 1
+        }
+    }
 }
+

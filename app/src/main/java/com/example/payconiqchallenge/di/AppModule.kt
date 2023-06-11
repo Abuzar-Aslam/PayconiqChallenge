@@ -14,7 +14,9 @@ import com.example.payconiqchallenge.presentation.userdetail.UserDetailViewModel
 import com.example.payconiqchallenge.provider.AndroidStringResourceProvider
 import com.example.payconiqchallenge.provider.StringResourceProvider
 import com.example.payconiqchallenge.utils.Constants
+import com.example.payconiqchallenge.utils.Constants.BASE_URL
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -38,7 +40,9 @@ val appModule = module {
     // Define a single instance of OkHttpClient with default settings
     single {
         //Can be updated later to set the timeout for the request like connectionTimeout and pass TimeUnit
-        OkHttpClient.Builder()
+        OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        })
             .build()
     }
 
@@ -71,6 +75,3 @@ val appModule = module {
     // Define the UserDetailViewModel using the provided UserDetailRepository, UserRepoRepository, and UserDetailInteractor
     viewModel { UserDetailViewModel(get(), get()) }
 }
-
-// Base URL for the API service
-private const val BASE_URL = "https://api.github.com/"

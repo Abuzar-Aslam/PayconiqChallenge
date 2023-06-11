@@ -24,8 +24,8 @@ class UserDetailInteractor(
      * @return A Result object representing the success or failure of the operation,
      * along with the user detail data if successful.
      */
-    suspend fun userDetail(userName: String, currentPage: Int): Result<UserDetailResult> {
-        return userDetailRepository.getUserDetail(userName,currentPage)
+    suspend fun userDetail(userName: String): Result<UserDetailResult> {
+        return userDetailRepository.getUserDetail(userName)
     }
 
     /**

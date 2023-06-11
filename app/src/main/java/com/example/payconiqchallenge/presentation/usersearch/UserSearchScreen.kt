@@ -20,9 +20,10 @@ import com.example.payconiqchallenge.utils.LoadingIndicator
 import com.example.payconiqchallenge.utils.rememberFlowWithLifecycle
 
 /**
- *Composable function for the User Search UI screen.
- *@param userSearchViewModel The UserSearchViewModel instance responsible for handling user search logic.
- *@param navHostController The NavHostController used for navigation within the app.
+ * Composable function for the User Search UI screen.
+ *
+ * @param userSearchViewModel The UserSearchViewModel instance responsible for handling user search logic.
+ * @param navHostController The NavHostController used for navigation within the app.
  */
 @ExperimentalComposeUiApi
 @ExperimentalAnimationApi
@@ -35,8 +36,6 @@ fun UserSearchScreen(
     // Collect the user search state using rememberFlowWithLifecycle and collectAsState
     val userSearchModelState by rememberFlowWithLifecycle(userSearchViewModel.userSearchState)
         .collectAsState(initial = UserSearchState.Empty)
-
-    val lazyListState = rememberLazyListState()
 
     // Render the search bar and user list
     SearchBarUI(
@@ -53,34 +52,17 @@ fun UserSearchScreen(
             onClick = { user ->
                 navHostController.navigate(route = "${NavPath.UserDetail.route}?name=${user.login}")
             },
-            onLoadMore = { userSearchViewModel.onLoadMore(userSearchModelState.searchQuery) }
+            onLoadMore = { userSearchViewModel.onLoadMore() }
         )
     }
 }
 
-
-//LazyColumn(
-//            state = lazyListState,
-//            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-//            verticalArrangement = Arrangement.spacedBy(4.dp)
-//        ) {
-//            itemsIndexed(userSearchModelState.searchResults) { index, user ->
-//                UserItem(user) {
-//                    navHostController.navigate(route = "${NavPath.UserDetail.route}?name=${user.login}")
-//                }
-//
-//                // Load more when reaching the end of the list
-//                if (index == userSearchModelState.searchResults.size - 1)
-//                {
-//                    userSearchViewModel.loadMore()
-//                }
-//            }
-//        }
-
 /**
- *Composable function for rendering a list of users.
- *@param users The list of UserModel representing the users to display.
- *@param onClick Callback function invoked when a user item is clicked.
+ * Composable function for rendering a list of users.
+ *
+ * @param users The list of UserModel representing the users to display.
+ * @param onClick Callback function invoked when a user item is clicked.
+ * @param onLoadMore Callback function invoked when the end of the list is reached.
  */
 @Composable
 fun UserList(
@@ -110,10 +92,6 @@ fun UserList(
                         }
                     }
                 }
-
-//                UserItem(users[user]) {
-//                    onClick(users[user])
-                //  }
             }
     }
 }

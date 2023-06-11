@@ -14,9 +14,12 @@ import retrofit2.http.Query
 interface ApiService {
 
     /**
-     * Fetches a list of users from the API.
+     * Fetches a list of users from the API based on the provided query and page number.
      *
-     * @return A list of users.
+     * @param query The search query used to filter the users.
+     * @param page The page number of the results to retrieve.
+     * @param perPage The number of users to retrieve per page (default value is PER_PAGE).
+     * @return A UserSearchResponse object containing the list of users.
      */
     @GET("search/users")
     suspend fun searchUsers(
@@ -26,22 +29,22 @@ interface ApiService {
     ): UserSearchResponse
 
     /**
-     * Fetches a detail of specific users from the API.
+     * Fetches the details of a specific user from the API based on the provided username.
      *
-     * @return user detail object of specific user.
+     * @param username The username of the user to retrieve the details for.
+     * @return A UserDetailResponse object containing the details of the specific user.
      */
     @GET("users/{username}")
     suspend fun getUserDetail(
-        @Path("username") username: String,
-        @Path("page") currentPage: Int
+        @Path("username") username: String
     ): UserDetailResponse
 
     /**
-     * Fetches a list of repos of specific user from the API.
+     * Fetches a list of repositories belonging to a specific user from the API.
      *
-     * @return list of repos of specific user.
+     * @param username The username of the user for which to retrieve the repositories.
+     * @return A list of UserRepositoryResponse objects representing the repositories of the user.
      */
     @GET("users/{username}/repos")
     suspend fun getUserRepository(@Path("username") username: String): List<UserRepositoryResponse>
-
 }

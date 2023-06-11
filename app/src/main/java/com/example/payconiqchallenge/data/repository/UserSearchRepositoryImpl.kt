@@ -14,18 +14,19 @@ import com.example.payconiqchallenge.data.apiservice.ApiService
 class UserSearchRepositoryImpl(private val apiService: ApiService) : UserSearchRepository {
 
     /**
-     * Searches for users based on the provided query.
+     * Searches for users based on the provided query and page number.
      *
      * @param query The search query.
+     * @param page The page number of the search results.
      * @return A [Result] object representing the result of the search operation. It contains a [UserSearchResult] on success or an error message on failure.
      */
     override suspend fun searchUsers(query: String, page: Int): Result<UserSearchResult> {
         return try {
-            val userResponseData = apiService.searchUsers(query,page)
+            val userResponseData = apiService.searchUsers(query, page)
             val userSearchResult = mapUserDataToDomain(userResponseData)
             Result.Success(userSearchResult)
         } catch (e: Exception) {
-           Result.Error("Failed to fetch users: ${e.message}")
+            Result.Error("Failed to fetch users: ${e.message}")
         }
     }
 
@@ -56,7 +57,4 @@ class UserSearchRepositoryImpl(private val apiService: ApiService) : UserSearchR
             htmlUrl = userItemResponse.htmlUrl
         )
     }
-
-
 }
-

@@ -12,13 +12,13 @@ import com.example.payconiqchallenge.data.repository.Result
 class UserInteractor(private val userRepository: UserSearchRepository) {
 
     /**
-     * Searches users based on the provided query.
+     * Searches users based on the provided query and page number.
      *
      * @param query The search query.
-     * @return A Result object representing the success or failure of the search operation,
-     * along with the search result data if successful.
+     * @param page The page number of the search results.
+     * @return A [Result] object representing the result of the search operation. It contains a [UserSearchResult] on success or an error message on failure.
      */
     suspend fun searchUser(query: String, page: Int): Result<UserSearchResult> {
-        return userRepository.searchUsers(query,page)
+        return userRepository.searchUsers(query, page)
     }
 }

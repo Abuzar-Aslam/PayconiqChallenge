@@ -50,7 +50,7 @@ class UserDetailViewModel(
             try {
                 val userDetailResult = withContext(Dispatchers.IO) {
                     runCatching {
-                        userDetailInteractor.userDetail(userName,currentPage)
+                        userDetailInteractor.userDetail(userName)
                     }.getOrElse {
                         Result.Error(
                             stringResourceProvider.getString(

@@ -51,8 +51,5 @@ fun UserItem(user: UserModel, onClick: () -> Unit) {
                 style = TextStyle(fontWeight = FontWeight.Bold),
             )
         }
-
-
     }
-
 }
