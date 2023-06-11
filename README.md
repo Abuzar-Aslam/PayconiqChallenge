@@ -37,7 +37,7 @@ To run the GitHub User Search App on your local machine, follow these steps:
 1. Clone the repository to your local machine:
 
    ```shell
-   git clone <repository-url>
+   git clone https://github.com/Abuzar-Aslam/PayconiqChallenge.git
 Open the project in Android Studio.
 
 Build and run the application on an Android emulator or physical device.
