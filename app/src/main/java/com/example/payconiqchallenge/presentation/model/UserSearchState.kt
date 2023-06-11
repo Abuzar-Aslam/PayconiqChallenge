@@ -13,6 +13,7 @@ import com.example.payconiqchallenge.domain.model.UserModel
 data class UserSearchState(
     val searchQuery: String = "",
     val searchResults: List<UserModel> = emptyList(),
+    val hasMorePages: Boolean = false,
     val isLoading: Boolean = false,
     val error: String = ""
 ){

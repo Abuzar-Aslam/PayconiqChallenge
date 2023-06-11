@@ -33,6 +33,8 @@ class UserDetailViewModel(
         MutableStateFlow(UserRepositoryState())
     val userRepositoryState: StateFlow<UserRepositoryState> = _userRepositoryState
 
+    private var currentPage: Int = 1
+
     /**
      *Fetches the user detail for the specified username.
      *@param userName The username of the user to fetch the detail for.
@@ -48,7 +50,7 @@ class UserDetailViewModel(
             try {
                 val userDetailResult = withContext(Dispatchers.IO) {
                     runCatching {
-                        userDetailInteractor.userDetail(userName)
+                        userDetailInteractor.userDetail(userName,currentPage)
                     }.getOrElse {
                         Result.Error(
                             stringResourceProvider.getString(

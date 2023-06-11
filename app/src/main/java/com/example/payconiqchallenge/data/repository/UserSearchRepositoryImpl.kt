@@ -19,9 +19,9 @@ class UserSearchRepositoryImpl(private val apiService: ApiService) : UserSearchR
      * @param query The search query.
      * @return A [Result] object representing the result of the search operation. It contains a [UserSearchResult] on success or an error message on failure.
      */
-    override suspend fun searchUsers(query: String): Result<UserSearchResult> {
+    override suspend fun searchUsers(query: String, page: Int): Result<UserSearchResult> {
         return try {
-            val userResponseData = apiService.searchUsers(query)
+            val userResponseData = apiService.searchUsers(query,page)
             val userSearchResult = mapUserDataToDomain(userResponseData)
             Result.Success(userSearchResult)
         } catch (e: Exception) {

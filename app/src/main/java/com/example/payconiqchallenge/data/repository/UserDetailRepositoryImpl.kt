@@ -1,10 +1,8 @@
 package com.example.payconiqchallenge.data.repository
 
 import com.example.payconiqchallenge.data.apiservice.ApiService
-import com.example.payconiqchallenge.data.model.UserRepositoryResponse
 import com.example.payconiqchallenge.data.model.UserDetailResponse
 import com.example.payconiqchallenge.domain.model.UserDetailResult
-import com.example.payconiqchallenge.domain.model.UserRepositoryResult
 import java.lang.Exception
 
 /**
@@ -20,10 +18,10 @@ class UserDetailRepositoryImpl(private val apiService: ApiService) : UserDetailR
      * @param username The username of the user.
      * @return A [Result] object representing the result of the operation. It contains either a [UserDetailResult] on success or an error message on failure.
      */
-    override suspend fun getUserDetail(username: String): Result<UserDetailResult> {
+    override suspend fun getUserDetail(username: String, currentPage: Int): Result<UserDetailResult> {
 
         try {
-            val userDetail = apiService.getUserDetail(username)
+            val userDetail = apiService.getUserDetail(username,currentPage)
             return Result.Success(mapUserDetailDataToDomain(userDetail))
         } catch (e: Exception) {
             return Result.Error("Failed to Fetch user Repository: ${e.message}")

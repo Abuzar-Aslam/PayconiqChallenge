@@ -13,6 +13,7 @@ import com.example.payconiqchallenge.domain.interactor.UserDetailInteractor
 import com.example.payconiqchallenge.presentation.userdetail.UserDetailViewModel
 import com.example.payconiqchallenge.provider.AndroidStringResourceProvider
 import com.example.payconiqchallenge.provider.StringResourceProvider
+import com.example.payconiqchallenge.utils.Constants
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -65,11 +66,10 @@ val appModule = module {
     single<StringResourceProvider> { AndroidStringResourceProvider(androidContext()) }
 
     // Define the UserSearchViewModel using the provided UserSearchRepository and UserInteractor
-    viewModel { UserSearchViewModel(get(),get()) }
+    viewModel { UserSearchViewModel(get(), get()) }
 
     // Define the UserDetailViewModel using the provided UserDetailRepository, UserRepoRepository, and UserDetailInteractor
     viewModel { UserDetailViewModel(get(), get()) }
-
 }
 
 // Base URL for the API service

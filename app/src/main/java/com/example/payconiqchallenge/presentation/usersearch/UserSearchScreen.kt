@@ -4,7 +4,9 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -25,11 +27,16 @@ import com.example.payconiqchallenge.utils.rememberFlowWithLifecycle
 @ExperimentalComposeUiApi
 @ExperimentalAnimationApi
 @Composable
-fun UserSearchUI(userSearchViewModel: UserSearchViewModel, navHostController: NavHostController) {
+fun UserSearchScreen(
+    userSearchViewModel: UserSearchViewModel,
+    navHostController: NavHostController
+) {
 
     // Collect the user search state using rememberFlowWithLifecycle and collectAsState
     val userSearchModelState by rememberFlowWithLifecycle(userSearchViewModel.userSearchState)
         .collectAsState(initial = UserSearchState.Empty)
+
+    val lazyListState = rememberLazyListState()
 
     // Render the search bar and user list
     SearchBarUI(
@@ -41,11 +48,34 @@ fun UserSearchUI(userSearchViewModel: UserSearchViewModel, navHostController: Na
     ) {
         // Render loading indicator and user list
         LoadingIndicator(isLoading = userSearchModelState.isLoading)
-        UserList(users = userSearchModelState.searchResults) { user ->
-            navHostController.navigate(route = "${NavPath.UserDetail.route}?name=${user.login}")
-        }
+        UserList(
+            users = userSearchModelState.searchResults,
+            onClick = { user ->
+                navHostController.navigate(route = "${NavPath.UserDetail.route}?name=${user.login}")
+            },
+            onLoadMore = { userSearchViewModel.onLoadMore(userSearchModelState.searchQuery) }
+        )
     }
 }
+
+
+//LazyColumn(
+//            state = lazyListState,
+//            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+//            verticalArrangement = Arrangement.spacedBy(4.dp)
+//        ) {
+//            itemsIndexed(userSearchModelState.searchResults) { index, user ->
+//                UserItem(user) {
+//                    navHostController.navigate(route = "${NavPath.UserDetail.route}?name=${user.login}")
+//                }
+//
+//                // Load more when reaching the end of the list
+//                if (index == userSearchModelState.searchResults.size - 1)
+//                {
+//                    userSearchViewModel.loadMore()
+//                }
+//            }
+//        }
 
 /**
  *Composable function for rendering a list of users.
@@ -53,7 +83,14 @@ fun UserSearchUI(userSearchViewModel: UserSearchViewModel, navHostController: Na
  *@param onClick Callback function invoked when a user item is clicked.
  */
 @Composable
-fun UserList(users: List<UserModel>?, onClick: (UserModel) -> Unit) {
+fun UserList(
+    users: List<UserModel>?,
+    onClick: (UserModel) -> Unit,
+    onLoadMore: () -> Unit
+) {
+
+    val scrollState = rememberLazyListState()
+
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
@@ -61,10 +98,22 @@ fun UserList(users: List<UserModel>?, onClick: (UserModel) -> Unit) {
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         if (!users.isNullOrEmpty())
-            items(users.size) { user ->
-                UserItem(users[user]) {
-                    onClick(users[user])
+            items(users.size) { index ->
+                val user = users[index]
+                UserItem(user) {
+                    onClick(user)
                 }
+                if (index == users.size - 1) {
+                    LaunchedEffect(scrollState.layoutInfo.totalItemsCount) {
+                        if (scrollState.firstVisibleItemIndex + scrollState.layoutInfo.visibleItemsInfo.size >= scrollState.layoutInfo.totalItemsCount) {
+                            onLoadMore()
+                        }
+                    }
+                }
+
+//                UserItem(users[user]) {
+//                    onClick(users[user])
+                //  }
             }
     }
 }

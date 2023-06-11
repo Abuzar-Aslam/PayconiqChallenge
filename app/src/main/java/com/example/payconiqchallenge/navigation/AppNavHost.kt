@@ -11,7 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.payconiqchallenge.presentation.userdetail.UserDetailUI
 import com.example.payconiqchallenge.presentation.userdetail.UserDetailViewModel
-import com.example.payconiqchallenge.presentation.usersearch.UserSearchUI
+import com.example.payconiqchallenge.presentation.usersearch.UserSearchScreen
 import com.example.payconiqchallenge.presentation.usersearch.UserSearchViewModel
 import org.koin.java.KoinJavaComponent.getKoin
 
@@ -46,7 +46,7 @@ fun AppNavHost(navHostController: NavHostController, scaffoldState: ScaffoldStat
 
 
         composable(NavPath.UserSearch.route) {
-            UserSearchUI(
+            UserSearchScreen(
                 navHostController = navHostController,
                 userSearchViewModel = searchViewModel
             )
