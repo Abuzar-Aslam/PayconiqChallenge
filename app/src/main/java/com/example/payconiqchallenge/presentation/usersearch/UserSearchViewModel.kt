@@ -11,7 +11,6 @@ import com.example.payconiqchallenge.utils.Constants.DEFAULT_PAGE
 import com.example.payconiqchallenge.utils.Constants.PER_PAGE
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -27,17 +26,17 @@ class UserSearchViewModel(
 
     private val _userSearchState: MutableStateFlow<UserSearchState> =
         MutableStateFlow(UserSearchState())
-    val userSearchState: StateFlow<UserSearchState> = _userSearchState
+    val userSearchState: MutableStateFlow<UserSearchState> = _userSearchState
 
-    private var currentPage: Int = DEFAULT_PAGE
-    private var totalCount: Int = 0
+    var currentPage: Int = DEFAULT_PAGE
+    var totalCount: Int = 0
 
     /**
      * Searches for users based on the given query and page number.
      * @param query The search query entered by the user.
      * @param page The page number to retrieve.
      */
-    private fun searchUsers(query: String, page: Int) {
+    fun searchUsers(query: String, page: Int) {
         viewModelScope.launch {
             try {
                 val result = withContext(Dispatchers.IO) {
