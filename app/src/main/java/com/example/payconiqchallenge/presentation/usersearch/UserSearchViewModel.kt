@@ -25,7 +25,7 @@ class UserSearchViewModel(
 ) : ViewModel() {
 
     private val _userSearchState: MutableStateFlow<UserSearchState> =
-        MutableStateFlow(UserSearchState())
+        MutableStateFlow(UserSearchState(error = stringResourceProvider.getString(R.string.no_search_message)))
     val userSearchState: MutableStateFlow<UserSearchState> = _userSearchState
 
     var currentPage: Int = DEFAULT_PAGE

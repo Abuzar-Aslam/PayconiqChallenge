@@ -30,7 +30,7 @@ fun SearchBarUI(
     onSearchTextChanged: (String) -> Unit = {},
     onClearClick: () -> Unit = {},
     matchesFound: Boolean,
-    errorMessage: String = stringResource(id = R.string.no_search_message),
+    errorMessage: String = "",
     results: @Composable () -> Unit = {},
 ) {
 
