@@ -23,7 +23,7 @@ import com.example.payconiqchallenge.R
  * @param searchText The current search text entered by the user.
  */
 @Composable
-fun NoSearchResults(searchText: String) {
+fun NoSearchResults(errorMessage: String) {
 
     Column(
         modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center,
@@ -35,7 +35,7 @@ fun NoSearchResults(searchText: String) {
             modifier = Modifier.size(48.dp)
         )
         Text(
-            text = stringResource(if (searchText.isEmpty()) R.string.no_search_message else R.string.no_search_result_message),
+            text = errorMessage,
             style = MaterialTheme.typography.subtitle1,
             modifier = Modifier.padding(top = 16.dp)
         )

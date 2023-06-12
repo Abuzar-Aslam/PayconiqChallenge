@@ -6,8 +6,10 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.payconiqchallenge.R
 
 /**
  * Composable function for displaying a search bar UI.
@@ -28,7 +30,8 @@ fun SearchBarUI(
     onSearchTextChanged: (String) -> Unit = {},
     onClearClick: () -> Unit = {},
     matchesFound: Boolean,
-    results: @Composable () -> Unit = {}
+    errorMessage: String = stringResource(id = R.string.no_search_message),
+    results: @Composable () -> Unit = {},
 ) {
 
     Box {
@@ -48,7 +51,7 @@ fun SearchBarUI(
                 Text("Results", modifier = Modifier.padding(8.dp), fontWeight = FontWeight.Bold)
                 results()
             } else {
-                NoSearchResults(searchText)
+                NoSearchResults(errorMessage)
             }
         }
     }

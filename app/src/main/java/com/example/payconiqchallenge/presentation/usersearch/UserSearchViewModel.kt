@@ -102,8 +102,14 @@ class UserSearchViewModel(
      */
     fun onSearchTextChanged(query: String) {
         currentPage = DEFAULT_PAGE
-        if (query.isNotEmpty()) {
-            // Start searching with the first page
+        if (query.isEmpty()) {
+            // Empty query, update the state accordingly
+            _userSearchState.value = UserSearchState(
+                searchQuery = query,
+                error = stringResourceProvider.getString(R.string.no_search_message)
+            )
+        } else if (isNameValid(query)) {
+            // Name is valid, proceed with the search
             _userSearchState.value = userSearchState.value.copy(
                 searchQuery = query,
                 isLoading = true,
@@ -111,14 +117,16 @@ class UserSearchViewModel(
             )
             searchUsers(query, currentPage)
         } else {
-            _userSearchState.value = UserSearchState(searchQuery = query)
+            // Invalid name, update the state accordingly
+            _userSearchState.value = UserSearchState(
+                searchQuery = query,
+                error = stringResourceProvider.getString(R.string.inavlid_input_search_message)
+            )
         }
     }
 
     /**
-     * Callback function invoked when
-
-    the "Load More" action is triggered. It loads the next page of search results if there are more pages available.
+     * Callback function invoked when the "Load More" action is triggered. It loads the next page of search results if there are more pages available.
      */
     fun onLoadMore() {
         val query = userSearchState.value.searchQuery
@@ -153,5 +161,19 @@ class UserSearchViewModel(
             (totalCount / perPage) + 1
         }
     }
+
+    /**
+     *Checks if a given name is valid according to the specified criteria.
+     * @param name The name to be validated.
+     *@return true if the name is valid, false otherwise.
+     */
+    fun isNameValid(name: String): Boolean {
+        // Define a regular expression pattern for valid names
+        val pattern = "^[a-zA-Z\\-]+$".toRegex()
+
+        // Use the pattern to match the name against the regular expression
+        return pattern.matches(name)
+    }
+
 }
 

@@ -43,7 +43,8 @@ fun UserSearchScreen(
         placeholderText = "Search users",
         onSearchTextChanged = { userSearchViewModel.onSearchTextChanged(it) },
         onClearClick = { userSearchViewModel.onClearClick() },
-        matchesFound = userSearchModelState.searchResults.isNotEmpty()
+        matchesFound = userSearchModelState.searchResults.isNotEmpty(),
+        errorMessage = userSearchModelState.error
     ) {
         // Render loading indicator and user list
         LoadingIndicator(isLoading = userSearchModelState.isLoading)
