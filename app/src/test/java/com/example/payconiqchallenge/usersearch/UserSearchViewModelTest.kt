@@ -1,5 +1,6 @@
 package com.example.payconiqchallenge.usersearch
 
+import com.example.payconiqchallenge.R
 import com.example.payconiqchallenge.data.repository.Result
 import com.example.payconiqchallenge.domain.interactor.UserInteractor
 import com.example.payconiqchallenge.domain.model.UserModel
@@ -26,13 +27,11 @@ import org.junit.Assert.assertEquals
 @ExperimentalCoroutinesApi
 class UserSearchViewModelTest {
 
-
     private lateinit var viewModel: UserSearchViewModel
     private lateinit var userInteractor: UserInteractor
     private lateinit var stringResourceProvider: StringResourceProvider
 
     private val testDispatcher = TestCoroutineDispatcher()
-
 
     @Before
     fun setup() {
@@ -72,6 +71,8 @@ class UserSearchViewModelTest {
         val query = ""
         val initialState = UserSearchState(searchQuery = "john", isLoading = false, error = "")
 
+        coEvery { stringResourceProvider.getString(2131558447) } returns NO_SEARCH_RESULT_STRING
+
         // Act
         viewModel.userSearchState.value = initialState
         viewModel.onSearchTextChanged(query)
@@ -79,7 +80,7 @@ class UserSearchViewModelTest {
         // Assert
         assertEquals(query, viewModel.userSearchState.value.searchQuery)
         assertEquals(false, viewModel.userSearchState.value.isLoading)
-        assertEquals("", viewModel.userSearchState.value.error)
+        assertEquals(NO_SEARCH_RESULT_STRING, viewModel.userSearchState.value.error)
         assertEquals(emptyList<UserModel>(), viewModel.userSearchState.value.searchResults)
     }
 
@@ -171,4 +172,25 @@ class UserSearchViewModelTest {
 
             coVerify(exactly = 1) { userInteractor.searchUser(query, DEFAULT_PAGE) }
         }
+
+
+    @Test
+    fun `test isNameValid with valid name`() {
+        val validName = "Valid-Name"
+        val result = viewModel.isNameValid(validName)
+        assertEquals(true, result)
+    }
+
+    @Test
+    fun `test isNameValid with invalid name`() {
+        val invalidName = "InValidName123"
+        val result = viewModel.isNameValid(invalidName)
+        assertEquals(false, result)
+    }
+
+    companion object {
+        val NO_SEARCH_RESULT_STRING = "Please start search to see result here"
+    }
+
 }
+
