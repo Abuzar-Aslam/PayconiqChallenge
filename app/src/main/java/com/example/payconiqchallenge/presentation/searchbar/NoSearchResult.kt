@@ -20,7 +20,7 @@ import com.example.payconiqchallenge.R
 /**
  * Composable function for displaying a message when there are no search results.
  *
- * @param searchText The current search text entered by the user.
+ * @param errorMessage The error message which will be visible on full screen.
  */
 @Composable
 fun NoSearchResults(errorMessage: String) {

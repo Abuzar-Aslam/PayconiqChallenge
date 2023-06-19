@@ -10,6 +10,8 @@ import com.example.payconiqchallenge.provider.StringResourceProvider
 import com.example.payconiqchallenge.utils.Constants.DEFAULT_PAGE
 import com.example.payconiqchallenge.utils.Constants.PER_PAGE
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -25,11 +27,13 @@ class UserSearchViewModel(
 ) : ViewModel() {
 
     private val _userSearchState: MutableStateFlow<UserSearchState> =
-        MutableStateFlow(UserSearchState())
+        MutableStateFlow(UserSearchState(error = stringResourceProvider.getString(R.string.no_search_message)))
     val userSearchState: MutableStateFlow<UserSearchState> = _userSearchState
 
     var currentPage: Int = DEFAULT_PAGE
     var totalCount: Int = 0
+
+    var searchJob: Job? = null
 
     /**
      * Searches for users based on the given query and page number.
@@ -37,8 +41,11 @@ class UserSearchViewModel(
      * @param page The page number to retrieve.
      */
     fun searchUsers(query: String, page: Int) {
-        viewModelScope.launch {
+
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
             try {
+                delay(500)
                 val result = withContext(Dispatchers.IO) {
                     runCatching {
                         userInteractor.searchUser(query, page)
@@ -147,6 +154,9 @@ class UserSearchViewModel(
         currentPage = DEFAULT_PAGE
         totalCount = 0
         _userSearchState.value = UserSearchState()
+
+        // Clear the search text in the UI
+        onSearchTextChanged("")
     }
 
     /**
