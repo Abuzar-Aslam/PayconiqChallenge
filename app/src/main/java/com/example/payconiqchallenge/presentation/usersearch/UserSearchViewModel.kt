@@ -10,8 +10,6 @@ import com.example.payconiqchallenge.provider.StringResourceProvider
 import com.example.payconiqchallenge.utils.Constants.DEFAULT_PAGE
 import com.example.payconiqchallenge.utils.Constants.PER_PAGE
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -27,13 +25,11 @@ class UserSearchViewModel(
 ) : ViewModel() {
 
     private val _userSearchState: MutableStateFlow<UserSearchState> =
-        MutableStateFlow(UserSearchState(error = stringResourceProvider.getString(R.string.no_search_message)))
+        MutableStateFlow(UserSearchState())
     val userSearchState: MutableStateFlow<UserSearchState> = _userSearchState
 
     var currentPage: Int = DEFAULT_PAGE
     var totalCount: Int = 0
-
-    var searchJob: Job? = null
 
     /**
      * Searches for users based on the given query and page number.
@@ -41,11 +37,8 @@ class UserSearchViewModel(
      * @param page The page number to retrieve.
      */
     fun searchUsers(query: String, page: Int) {
-
-        searchJob?.cancel()
-        searchJob = viewModelScope.launch {
+        viewModelScope.launch {
             try {
-                delay(500)
                 val result = withContext(Dispatchers.IO) {
                     runCatching {
                         userInteractor.searchUser(query, page)
@@ -109,14 +102,8 @@ class UserSearchViewModel(
      */
     fun onSearchTextChanged(query: String) {
         currentPage = DEFAULT_PAGE
-        if (query.isEmpty()) {
-            // Empty query, update the state accordingly
-            _userSearchState.value = UserSearchState(
-                searchQuery = query,
-                error = stringResourceProvider.getString(R.string.no_search_message)
-            )
-        } else if (isNameValid(query)) {
-            // Name is valid, proceed with the search
+        if (query.isNotEmpty() && isNameValid(query)) {
+            // Start searching with the first page
             _userSearchState.value = userSearchState.value.copy(
                 searchQuery = query,
                 isLoading = true,
@@ -124,16 +111,14 @@ class UserSearchViewModel(
             )
             searchUsers(query, currentPage)
         } else {
-            // Invalid name, update the state accordingly
-            _userSearchState.value = UserSearchState(
-                searchQuery = query,
-                error = stringResourceProvider.getString(R.string.inavlid_input_search_message)
-            )
+            _userSearchState.value = UserSearchState(searchQuery = query)
         }
     }
 
     /**
-     * Callback function invoked when the "Load More" action is triggered. It loads the next page of search results if there are more pages available.
+     * Callback function invoked when
+
+    the "Load More" action is triggered. It loads the next page of search results if there are more pages available.
      */
     fun onLoadMore() {
         val query = userSearchState.value.searchQuery
@@ -154,9 +139,6 @@ class UserSearchViewModel(
         currentPage = DEFAULT_PAGE
         totalCount = 0
         _userSearchState.value = UserSearchState()
-
-        // Clear the search text in the UI
-        onSearchTextChanged("")
     }
 
     /**
@@ -184,6 +166,5 @@ class UserSearchViewModel(
         // Use the pattern to match the name against the regular expression
         return pattern.matches(name)
     }
-
 }
 
